@@ -1,11 +1,19 @@
 /* Fill out these functions using Mongoose queries*/
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var config = require('./config');
+var mongoose = require('mongoose');
+var Listing = require('./ListingSchema.js');
+
+mongoose.connect(config.db.uri);
 
 var findLibraryWest = function() {
-  /* 
-    Find the document that contains data corresponding to Library West,
-    then log it to the console. 
-   */
+	Listing.findOne({"code": "LBW"}, function(err, libwest) {
+		if(err) return console.error(err);
+		console.log(libwest);
+	});
 };
+
 var removeCable = function() {
   /*
     Find the document with the code 'CABL'. This cooresponds with courses that can only be viewed 
@@ -20,9 +28,10 @@ var updatePhelpsMemorial = function() {
    */
 };
 var retrieveAllListings = function() {
-  /* 
-    Retrieve all listings in the database, and log them to the console. 
-   */
+  Listing.find(function(err,listings) {
+	  if(err) return console.error(err);
+	  console.log(listings);
+  });
 };
 
 findLibraryWest();
